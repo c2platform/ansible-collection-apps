@@ -1,0 +1,41 @@
+---
+# from https://github.com/ansible/awx/blob/devel/installer/inventory
+dockerhub_base: ansible
+awx_task_hostname: awx
+awx_web_hostname: awxweb
+postgres_data_dir: "~/.awx/pgdocker"
+host_port: 80
+host_port_ssl: 443
+docker_compose_dir: "~/.awx/awxcompose"
+
+pg_username: awx
+pg_password: awxpass # secret
+pg_database: awx
+pg_port: 5432
+admin_user: admin
+admin_password: password # secret
+create_preload_data: no
+secret_key: awxsecret # secret
+broadcast_websocket_secret: oh6G4y2XdXhI2MaoQ16A # secret
+
+project_data_dir: /opt/awx
+
+#http_proxy=http://proxy:3128
+#https_proxy=http://proxy:3128
+#no_proxy=mycorp.org
+
+# from https://github.com/ansible/awx/blob/devel/installer/roles/local_docker/defaults/main.yml
+dockerhub_version: 16.0.0
+awx_image: awx
+redis_image: redis
+
+postgresql_version: 10
+postgresql_image: "postgres:{{postgresql_version}}"
+
+compose_start_containers: true
+
+# for backup role                                                                              only
+awx_home: "{{ project_data_dir }}"
+awx_version: "{{ dockerhub_version }}"
+
+awx_versions_sequence: ['16.0.0']

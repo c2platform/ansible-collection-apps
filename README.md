@@ -1,4 +1,4 @@
-# TPELCM Ansible Repository
+# C2 Platform Ansible Repository
 
 This purpose of this repository is to automate Life Cycle Management (LCM) procedures using Ansible.
 
@@ -45,9 +45,9 @@ _Capability Levels_
 
 This repository includes a number of supporting products / components that are typically used in conjunction with the products above:
 
-| Component   |  Purpose | 
+| Component   |  Purpose |
 |----------|---|
-| [reverse-proxy](roles/internal/reverse-proxy)| Reverse proxy server |
+| [reverse_proxy](roles/internal/reverse_proxy)| Reverse proxy server |
 | [postgresql](roles/external/geerlingguy.postgresql)| Database for SonarQube, Jira, Bitbucket, Confluence |
 | [cacerts](roles/internal/cacerts)| Import certificates, CA bundles in keystores |
 | [lcm](roles/internal/lcm)| Support LCM operations install, upgrade, rollback, rollforward|
@@ -71,14 +71,22 @@ Install Ansible, Vagrant, VirtualBox on Ubuntu 18.04 machine.
 
 ### Ansible
 
-Add the Ansible repository and install [Ansible](https://ansible.com).
+Install [Ansible](https://ansible.com) via Pip with Python 3 is recommended Add. E.g. in `~/.bashrc`
 
-    sudo add-apt-repository ppa:ansible/ansible
-    sudo apt-get install ansible
+```    
+alias python='python3'
+alias pip='pip3'
+```
+
+And then 
+
+    pip install ansible
 
 This repository has been used with:
 1. Ansible 2.8.3 and Python 2.7.15. 
 2. Ansible 2.10.3 and Python 3.6.9.  
+
+Python 3 is recommended for the Vagrant dev / control node. 
 
 ### Vagrant
 
@@ -93,10 +101,15 @@ This repository has been used with:
 
 Git clone this repository for example to `~/ansible`. 
 
-git clone 
-cd ~/ansible
+    git clone https://github.com/c2platform/ansible.git
+    cd ~/ansible
 
-Note: if you run a vagrant command for example `vagrant status` a [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) password stored in the file `~/ansible/vpass` with content `secret` in root of the repository directory. This is used by Ansible vault for encrypting and decrypting [secrets](SECRETS.md). 
+Note: if you run a vagrant command for example `vagrant status` a [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) password stored in the file `~/ansible/vpass` with content `secret` in root of the repository directory. This is used by Ansible vault for encrypting and decrypting [secrets](SECRETS.md).
+
+The project uses Ansible collections. One collection, the ForgeRock collection, is used via a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules). If you want to use that collection you should also run
+
+    git submodule init
+    git submodule update
 
 ### Provision a first service
 

@@ -1,0 +1,26 @@
+---
+- name: Configure ports
+  template:
+    src: ports.conf.j2
+    dest: /etc/httpd/conf.d/ports.conf
+    mode: 0644
+  notify: restart apache
+
+- name: Configure Httpd
+  template:
+    src: sites.conf.j2
+    dest: "/etc/httpd/conf.d/sites.conf"
+    mode: 0644
+  notify: restart apache
+
+- name: Delete obsolete config
+  file:
+   path: "/etc/httpd/conf.d/{{ item }}"
+   state: absent
+  notify: restart apache
+  with_items:
+     - autoindex.conf
+     - ssl.conf
+     - userdir.conf
+     - vhosts.conf
+     - welcome.conf
