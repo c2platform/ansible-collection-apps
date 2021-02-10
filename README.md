@@ -1,3 +1,3 @@
-# Ansible Collection - c2platform.services
+# Ansible Collection - c2platform.apps
 
 Documentation for the collection.
