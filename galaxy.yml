@@ -1,0 +1,24 @@
+
+namespace: c2platform
+name: apps
+
+version: 1.0.0
+
+authors:
+- Onno van der Straaten (https://github.com/onknows)
+
+description: C2 Platform Ansible Collection with Applications
+license_file: LICENSE
+readme: README.md
+
+tags: []
+
+dependencies:
+  c2platform.platform: ">=1.0.0"
+
+repository: https://github.com/c2platform/ansible-collection-apps
+documentation: https://github.com/c2platform/ansible-collection-apps
+homepage: https://github.com/c2platform/
+issues: https://github.com/c2platform/ansible-collection-apps/issues
+
+build_ignore: []

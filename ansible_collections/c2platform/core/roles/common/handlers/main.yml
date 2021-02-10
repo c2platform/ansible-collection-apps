@@ -1,6 +1,0 @@
----
-- name: systemctl-daemon-reload
-  systemd:
-    daemon_reload: true
-  changed_when: false
-  ignore_errors: true

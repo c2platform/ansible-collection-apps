@@ -1,7 +1,0 @@
----
-- name: base
-  hosts: base
-  become: yes
-
-  roles:
-    - { role: common,                       tags: ["common"] }

@@ -1,3 +1,0 @@
-[submodule "ansible_collections/c2platform/forgerock"]
-	path = ansible_collections/c2platform/forgerock
-	url = git@dxc-bkwi.gitlab.host:ansible/forgerock-collection.git
