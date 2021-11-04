@@ -95,3 +95,4 @@ jira_libraries: []
 jira_packages:
   RedHat: ['fontconfig']
   CentOS: ['dejavu-sans-fonts','fontconfig']
+  Ubuntu: ['fontconfig']
