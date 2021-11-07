@@ -17,12 +17,8 @@
     - jira-systemctl-daemon-reload
     - jira-systemctl-restart
 
-- include_role:
-    name: c2platform.tasks
-    tasks_from: psql-database
-  vars:
-    lcm_role_upgrade: jira
-  when: jira_database_type == 'postgresql'
+- include_tasks: database.yml
+  when: jira_database_inventory_hostname is defined and jira_database_type == 'postgresql'
 
 - include: install.yml
 - include: jmx.yml
