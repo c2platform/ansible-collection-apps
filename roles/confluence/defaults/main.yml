@@ -109,9 +109,9 @@ confluence_versions:
   6.15.10:
     url: https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-6.15.10-x64.bin
     checksum: sha256:5dfdcaa5c79c0fb5488a323e8b2264c3fbc35d4b972ba0b16cfc12138fe71f0d
-  7.0.4:
-    url: https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-7.0.4-x64.bin
-    checksum: sha256:4dfaeda6b481cc741e30c636f85d4c10456637a46f2be2ac2efbcbe7d53f9a15
+  7.0.2:
+    url: https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-7.0.2-x64.bin
+    checksum: sha256:43567a40a67dd3575782a18f2efb4f81b710bf60fc58c6e4629265f966f654b1
   7.4.0:
     url: https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-7.4.0-x64.bin
     checksum: sha256:c838a4574eff529e9186a4c842f8c407c607fe91a5a5c57c2b9497ac28ed157d
@@ -122,7 +122,7 @@ confluence_versions:
     url: https://product-downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-7.4.5-x64.bin
     checksum: sha256:cd7e69760d7543153713ad3af1ec31b8801abb36ec39a0c92149d30c9cf07dd8
 
-confluence_versions_sequence: ['6.14.3','6.15.10','7.0.4','7.4.0','7.4.3','7.4.5']
+confluence_versions_sequence: ['6.14.3','6.15.10','7.0.2','7.4.0','7.4.3','7.4.5']
 
 confluence_libraries: []
 #  - url: https://github.com/javamelody/jira-confluence-javamelody/releases/download/1.83.0/jira-confluence-javamelody-1.83.0.jar
