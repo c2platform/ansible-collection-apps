@@ -17,11 +17,8 @@
     - confluence-systemctl-daemon-reload
     - confluence-systemctl-restart
 
-- include_role: c2platform.tasks
-  tasks_from: psql-database
-  vars:
-      lcm_role_upgrade: "confluence"
-  when: confluence_database_type == 'postgresql'
+- include_tasks: database.yml
+  when: confluence_database_inventory_hostname is defined and confluence_database_type == 'postgresql'
 
 - include: install.yml
 - include: cert.yml
