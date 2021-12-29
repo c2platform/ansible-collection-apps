@@ -22,4 +22,19 @@
 
 - include: install.yml
 - include: jmx.yml
+
+- name: Import CA bundles
+  include_role:
+    name: c2platform.core.java
+    tasks_from: main
+  vars:
+    java_version: jira
+    java_versions:
+      jira:
+        java_home: "{{ jira_home_version_app }}/jre"
+        bundles: "{{ jira_ca_bundles }}"
+        notify: jira-systemctl-restart
+        install: false # we are only managing keystore
+  when: jira_ca_bundles is defined
+
 - include: service.yml
