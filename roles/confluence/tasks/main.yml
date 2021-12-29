@@ -23,4 +23,19 @@
 - include: install.yml
 - include: cert.yml
 - include: jmx.yml
+
+- name: Import CA bundles
+  include_role:
+    name: c2platform.core.java
+    tasks_from: main
+  vars:
+    java_version: confluence
+    java_versions:
+      confluence:
+        java_home: "{{ confluence_home_version_app }}/jre"
+        bundles: "{{ confluence_ca_bundles }}"
+        notify: confluence-systemctl-restart
+        install: false # we are only managing keystore
+  when: confluence_ca_bundles is defined
+
 - include: service.yml
