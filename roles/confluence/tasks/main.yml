@@ -38,4 +38,20 @@
         install: false # we are only managing keystore
   when: confluence_ca_bundles is defined
 
+- name: Import trusted certificates
+  include_role:
+    name: c2platform.core.java
+    tasks_from: main
+  vars:
+    java_version: confluence
+    java_versions:
+      confluence:
+        java_home: "{{ confluence_home_version_app }}/jre"
+        keystore: "{{ confluence_home_version_app }}/jre/lib/security/cacerts"
+    java_trusted_sites_enabled: yes
+    java_trusted_sites:
+      certs: "{{ confluence_trusted_sites }}"
+      notify: confluence-systemctl-restart
+  when: confluence_trusted_sites is defined
+
 - include: service.yml

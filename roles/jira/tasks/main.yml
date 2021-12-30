@@ -37,4 +37,20 @@
         install: false # we are only managing keystore
   when: jira_ca_bundles is defined
 
+- name: Import trusted certificates
+  include_role:
+    name: c2platform.core.java
+    tasks_from: main
+  vars:
+    java_version: jira
+    java_versions:
+      jira:
+        java_home: "{{ jira_home_version_app }}/jre"
+        keystore: "{{ jira_home_version_app }}/jre/lib/security/cacerts"
+    java_trusted_sites_enabled: yes
+    java_trusted_sites:
+      certs: "{{ jira_trusted_sites }}"
+      notify: jira-systemctl-restart
+  when: jira_trusted_sites is defined
+
 - include: service.yml
