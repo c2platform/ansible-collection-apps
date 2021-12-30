@@ -26,8 +26,6 @@ confluence_database_password: supersecure
 confluence_database_host: localhost
 confluence_database_port: "5432"
 confluence_database_name: confluence
-confluence_database_admin_username: ansible
-confluence_database_admin_password: supersecure
 confluence_database_template: template0
 # confluence_database_jdbc_url:
 
