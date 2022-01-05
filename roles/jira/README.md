@@ -6,9 +6,10 @@ Installs [Atlassian Jira](https://www.atlassian.com/software/jira/) on RedHat/Ce
 
 - [Requirements](#requirements)
 - [Role Variables](#role-variables)
-    - [CA bundles](#ca-bundles)
-    - [Manual upgrade](#manual-upgrade)
-    - [Backup / restore](#backup--restore)
+  - [Service environment](#service-environment)
+  - [Keystore](#keystore)
+  - [Manual upgrade](#manual-upgrade)
+  - [Backup / restore](#backup--restore)
 - [Dependencies](#dependencies)
 - [Example Playbook](#example-playbook)
 
@@ -22,15 +23,25 @@ Installs [Atlassian Jira](https://www.atlassian.com/software/jira/) on RedHat/Ce
 
 <!--  A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well. -->
 
-### CA bundles
-
-The list `jira_ca_bundles` can be used to import one or more CA bundles to facilitate secure communication.
+### Service environment
 
 ```yaml
-jira_ca_bundles:
+jira_service_environment:
+  - LOG4J_FORMAT_MSG_NO_LOOKUPS=true
+```
+
+### Keystore
+
+The list `jira_trusts` can be used to import one or more CA bundles to facilitate secure communication.
+
+```yaml
+jira_trusts:
   - alias: gxd
     url: file:///vagrant/.ca/gxd/gxd.crt
 ```
+
+This is based on the `trusts` attribute of [c2platform.core.java](https://github.com/c2platform/ansible-collection-core/tree/master/roles/java) Ansible role.
+
 
 ### Manual upgrade
 

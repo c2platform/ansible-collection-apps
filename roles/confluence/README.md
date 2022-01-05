@@ -8,8 +8,9 @@ Default Confluence will be configured to be used via a reverse proxy server. Def
 
 - [Requirements](#requirements)
 - [Role Variables](#role-variables)
+  - [Service environment](#service-environment)
   - [Manual upgrade](#manual-upgrade)
-  - [CA bundles](#ca-bundles)
+  - [Manage keystore](#manage-keystore)
   - [Backup / restore](#backup--restore)
 - [Dependencies](#dependencies)
 - [Example Playbook](#example-playbook)
@@ -24,19 +25,28 @@ Default Confluence will be configured to be used via a reverse proxy server. Def
 
 <!--  A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well. -->
 
+### Service environment
+
+```yaml
+jira_service_environment:
+  - LOG4J_FORMAT_MSG_NO_LOOKUPS=true
+```
+
 ### Manual upgrade
 
 For `confluence_manual_upgrade` see [jira](../jira). 
 
-### CA bundles
+### Manage keystore
 
-The list `confluence_ca_bundles` can be used to import one or more CA bundles to facilitate secure communication.
+The list `confluence_trusts` can be used to import one or more CA bundles / certificates to facilitate secure communication. 
 
 ```yaml
-confluence_ca_bundles:
+confluence_trusts:
   - alias: gxd
     url: file:///vagrant/.ca/gxd/gxd.crt
 ```
+
+This is based on the `trusts` attribute of [c2platform.core.java](https://github.com/c2platform/ansible-collection-core/tree/master/roles/java) Ansible role.
 
 ### Backup / restore
 
