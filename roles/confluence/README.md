@@ -10,7 +10,7 @@ Default Confluence will be configured to be used via a reverse proxy server. Def
 - [Role Variables](#role-variables)
   - [Service environment](#service-environment)
   - [Manual upgrade](#manual-upgrade)
-  - [Manage keystore](#manage-keystore)
+  - [Manage keystore / trusts](#manage-keystore--trusts)
   - [Backup / restore](#backup--restore)
 - [Dependencies](#dependencies)
 - [Example Playbook](#example-playbook)
@@ -36,7 +36,7 @@ jira_service_environment:
 
 For `confluence_manual_upgrade` see [jira](../jira). 
 
-### Manage keystore
+### Manage keystore / trusts
 
 The list `confluence_trusts` can be used to import one or more CA bundles / certificates to facilitate secure communication. 
 
@@ -46,7 +46,7 @@ confluence_trusts:
     url: file:///vagrant/.ca/gxd/gxd.crt
 ```
 
-This is based on the `trusts` attribute of [c2platform.core.java](https://github.com/c2platform/ansible-collection-core/tree/master/roles/java) Ansible role.
+This is based on the `trusts` attribute of [c2platform.core.java](https://github.com/c2platform/ansible-collection-core/tree/master/roles/java#manage-keystore--trusts) Ansible role.
 
 ### Backup / restore
 

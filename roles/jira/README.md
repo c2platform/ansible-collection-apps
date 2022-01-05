@@ -7,7 +7,7 @@ Installs [Atlassian Jira](https://www.atlassian.com/software/jira/) on RedHat/Ce
 - [Requirements](#requirements)
 - [Role Variables](#role-variables)
   - [Service environment](#service-environment)
-  - [Keystore](#keystore)
+  - [Manage keystore](#manage-keystore)
   - [Manual upgrade](#manual-upgrade)
   - [Backup / restore](#backup--restore)
 - [Dependencies](#dependencies)
@@ -30,7 +30,7 @@ jira_service_environment:
   - LOG4J_FORMAT_MSG_NO_LOOKUPS=true
 ```
 
-### Keystore
+### Manage keystore
 
 The list `jira_trusts` can be used to import one or more CA bundles to facilitate secure communication.
 
@@ -40,8 +40,7 @@ jira_trusts:
     url: file:///vagrant/.ca/gxd/gxd.crt
 ```
 
-This is based on the `trusts` attribute of [c2platform.core.java](https://github.com/c2platform/ansible-collection-core/tree/master/roles/java) Ansible role.
-
+This is based on the `trusts` attribute of [c2platform.core.java](https://github.com/c2platform/ansible-collection-core/tree/master/roles/java#manage-keystore--trusts) Ansible role.
 
 ### Manual upgrade
 
