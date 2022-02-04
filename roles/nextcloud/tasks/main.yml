@@ -1,10 +1,29 @@
 ---
-- block:
-  - name: Create database
-    include_role:
-      name: c2platform.core.postgresql_tasks
-      tasks_from: database
-    vars:
-      lcm_role_upgrade: nextcloud
-  delegate_to: "{{ nextcloud_database_inventory_hostname }}"
-  become_user: postgres
+- include_tasks: database.yml
+  when: nextcloud_database_inventory_hostname is defined
+
+- name: PHP PostgreSQL package # should be part of aalaesar.install_nextcloud
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+      - "php{{ php_ver }}-pgsql"
+      - "python{{ '3' if ansible_python.version.major == 3 else '' }}-psycopg2"
+
+- name:  Install NextCloud
+  include_role:
+    name: aalaesar.install_nextcloud
+
+- name: Create home link
+  file:
+    src: "{{ nextcloud_home_version }}"
+    dest: "{{ nextcloud_home_link }}"
+    state: link
+
+- name: Data dir
+  file:
+    path: "{{ nextcloud_data_dir }}"
+    state: directory
+    owner: "{{ nextcloud_websrv_user }}"
+    group: "{{ nextcloud_websrv_group }}"
+    mode: 0755
