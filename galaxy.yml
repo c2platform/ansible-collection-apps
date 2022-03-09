@@ -13,7 +13,7 @@ readme: README.md
 
 tags: []
 
-dependencies: []
+dependencies:
   c2platform.core: ">=0.1.0"
 
 repository: https://github.com/c2platform/ansible-collection-apps
