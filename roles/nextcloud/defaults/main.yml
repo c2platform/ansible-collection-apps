@@ -1,0 +1,8 @@
+---
+nextcloud_home: /opt/nextcloud
+nextcloud_version: '16.0.4'
+nextcloud_database_name: nextcloud
+nextcloud_database_username: nextcloud
+nextcloud_database_password: supersecure
+nextcloud_versions_sequence: ['16.0.4']
+# nextcloud_database_inventory_hostname
