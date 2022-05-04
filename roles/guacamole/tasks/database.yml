@@ -1,33 +1,13 @@
 ---
-- name: Create user
-  postgresql_user:
-    name: "{{ guacamole_database_username }}"
-    password: "{{ guacamole_database_password }}"
-    db: "postgres"
-    login_host: "{{ guacamole_database_host }}"
-    login_password: "{{ guacamole_database_admin_password }}"
-    login_user: "{{ guacamole_database_admin_username }}"
-    port: "{{ guacamole_database_port }}"
-    state: "{{ item.state | default('present') }}"
-  no_log: true
-  vars:
-    ansible_ssh_pipelining: true
-
-- name: Create database
-  postgresql_db:
-    name: "{{ guacamole_database_name_version }}"
-    lc_collate: 'en_US.UTF-8'
-    lc_ctype: 'en_US.UTF-8'
-    encoding: 'UTF-8'
-    template: "{{ guacamole_database_template }}"
-    login_host: "{{ guacamole_database_host }}"
-    login_password: "{{ guacamole_database_admin_password }}"
-    login_user: "{{ guacamole_database_admin_username }}"
-    port: "{{ guacamole_database_port }}"
-    owner: "{{ guacamole_database_username }}"
-    state: "{{ item.state | default('present') }}"
-  vars:
-    ansible_ssh_pipelining: true
+- block:
+  - name: Create database
+    include_role:
+      name: c2platform.core.postgresql_tasks
+      tasks_from: database
+    vars:
+      lcm_role_upgrade: guacamole
+  delegate_to: "{{ guacamole_database_inventory_hostname }}"
+  become_user: postgres
 
 - name: Check initdb.sql
   stat:

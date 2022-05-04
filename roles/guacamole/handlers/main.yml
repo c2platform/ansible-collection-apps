@@ -1,0 +1,4 @@
+---
+- name: docker restart containers
+  shell:
+    cmd: "docker restart {{ guacamole_daemon_name }} {{ guacamole_web_name }}"

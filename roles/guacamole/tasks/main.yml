@@ -1,30 +1,38 @@
 ---
 #- name: Stop for LCM
 #  service: name=guacamole state=stopped
-#  when: guacamole_lcm['operation'] in ['upgrade','rollback','rollforward'] 
+#  when: guacamole_lcm['operation'] in ['upgrade','rollback','rollforward']
 
-- name: Add linux user
+- name: Add account
   user:
     name: "{{ guacamole_owner }}"
     comment: guacamole
     shell: /bin/bash
 
-- name: Create root directory
+- name: Setup home dirs
   file:
-    path: "{{ guacamole_home }}"
+    path: "{{ item }}"
     state: directory
     group: "{{ guacamole_owner }}"
     owner: "{{ guacamole_owner }}"
     mode: 0644
-
-- name: Create install folder
-  file:
-    path: "{{ guacamole_home_version }}"
-    state: directory
-    group: "{{ guacamole_owner }}"
-    owner: "{{ guacamole_owner }}"
-    mode: 0644
-  register: install_symlink
+  with_items:
+    - "{{ guacamole_home }}"
+    - "{{ guacamole_home_version }}"
 
 - include: database.yml
-- include: install.yml
+
+- name: Files
+  include_role:
+    name: c2platform.core.files
+    tasks_from: main
+  vars:
+    common_files_role_name: guacamole
+
+- name: Docker
+  include_role:
+    name: c2platform.mw.docker
+    tasks_from: main
+    handlers_from: main
+  vars:
+    docker_role_name: guacamole
