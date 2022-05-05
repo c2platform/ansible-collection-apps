@@ -5,40 +5,36 @@
     state: directory
     mode: 0400
 
-- name: VNC password
-  template:
-    dest: "{{ desktop_home }}/set-vnc-password.sh"
-    src: set-vnc-password.sh.j2
-    mode: 0755
+- name: Files
+  include_role:
+    name: c2platform.core.files
+    tasks_from: main
+  vars:
+    common_files_role_name: desktop
 
-- name: Pull image
-  docker_image:
-    name: "{{ desktop_image }}:{{ desktop_version }}"
-    source: pull
+- name: Docker
+  include_role:
+    name: c2platform.mw.docker
+    tasks_from: main
+    handlers_from: main
+  vars:
+    docker_role_name: desktop
 
-- name: Create volume
-  docker_volume:
-    name: "{{ item }}"
-  with_items: "{{ desktop_volumes }}"
+- name: Write VNC password  # just for reference
+  copy:
+    content: "{{ item['vnc_password']|default(desktop_vnc_password) }}"
+    dest: "{{ desktop_home }}/{{ item['name'] }}"
+    mode: 0400
+  with_items: "{{ desktop_docker_containers }}"
+  loop_control:
+    label: "{{ item['name'] }} → {{ desktop_home }}/{{ item['name'] }}"
 
-- name: Start desktop
-  docker_container:
-    name: "{{ item }}"
-    image: "{{ desktop_containers[item]['desktop_image']|default(desktop_image) }}:{{ desktop_containers[item]['desktop_version']|default(desktop_version) }}"
-    networks:
-      - name: "{{ desktop_network }}"
-    volumes: "{{ desktop_containers[item]['volumes']|default(omit) }}"
-    env: "{{ desktop_env }}"
-    command: "{{ desktop_containers[item]['command']|default('/usr/local/bin/vncserver-docker-desktop') }}"
-    etc_hosts: "{{ desktop_containers[item].hosts|default(omit) }}"
-    #ports:
-    # - "5901:5901"
-    # - "2222:22"
-    restart_policy: unless-stopped
-  with_items: "{{ desktop_containers }}"
-
-- name: Set passwords # noqa 305
-  shell: "{{ desktop_home }}/set-vnc-password.sh {{ item }}"
-  with_items: "{{ desktop_containers }}"
-  changed_when: false
-  # TODO more robust changed_when, failed_when
+- name: Set VNC password
+  shell: >-
+    docker exec {{ item['name'] }}
+    /bin/bash -c  "/usr/local/bin/vncserver-vncpasswd $VNC_PASSWORD vagrant"
+  with_items: "{{ desktop_docker_containers }}"
+  environment:
+    VNC_PASSWORD: "{{ item['vnc_password']|default(desktop_vnc_password) }}"
+  loop_control:
+    label: "{{ item['name'] }}"

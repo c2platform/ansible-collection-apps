@@ -8,6 +8,8 @@ Create a Docker based desktop to access via X2Go or VNC.
 - [Role Variables](#role-variables)
 - [Dependencies](#dependencies)
 - [Example Playbook](#example-playbook)
+- [Notes](#notes)
+  - [Troubleshooting](#troubleshooting)
 
 <!-- /MarkdownTOC -->
 
@@ -31,4 +33,12 @@ Create a Docker based desktop to access via X2Go or VNC.
     - hosts: servers
       roles:
          - { role: username.rolename, x: 42 }
+```
+
+## Notes
+
+### Troubleshooting
+
+```bash
+docker run -p 5901:5901 -e DOCKER_DESKTOP_USER=vagrant -e DOCKER_DESKTOP_GEOMETRY=1920x1080 onknows/desktop:0.1.4 /usr/local/bin/vncserver-docker-desktop
 ```

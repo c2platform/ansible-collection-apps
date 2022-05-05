@@ -5,6 +5,7 @@ desktop_network: guacamole
 
 desktop_geometry: 1920x1080
 desktop_home: /opt/desktop
+desktop_vnc_password: vault
 
 desktop_volumes: []
 desktop_containers: []
