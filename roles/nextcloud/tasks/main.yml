@@ -10,6 +10,19 @@
       - "php{{ php_ver }}-pgsql"
       - "python{{ '3' if ansible_python.version.major == 3 else '' }}-psycopg2"
 
+- name: Stat config.php
+  stat:
+    path: "{{ nextcloud_home_version }}/config/config.php"
+  register: _config_php
+
+- name: Files
+  include_role:
+    name: c2platform.core.files
+    tasks_from: main
+  vars:
+    common_files_role_name: nextcloud
+  when: _config_php.stat.exists
+
 - name:  Install NextCloud
   include_role:
     name: aalaesar.install_nextcloud

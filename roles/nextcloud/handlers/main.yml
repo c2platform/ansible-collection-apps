@@ -1,0 +1,5 @@
+---
+- name: restart http
+  service:
+    name: "{{ nextcloud_websrv }}"
+    state: restarted
